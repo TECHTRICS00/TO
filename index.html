@@ -109,6 +109,77 @@
     </div>
   </section>
 
+  <section class="reviews-section">
+  <div class="container">
+    <h2 class="section-title">Traveler Reviews</h2>
+    <div class="reviews-container">
+      <div class="review-card">
+        <div class="review-header">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&auto=format&fit=crop" alt="Sarah Johnson" class="review-avatar">
+          <div class="review-user">
+            <div class="review-name">Sarah Johnson</div>
+            <div class="review-date">March 15, 2024</div>
+            <div class="review-rating">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Kasaragod is a hidden gem! Bekal Fort and the backwaters were unforgettable. The sunsets were magical and the food was delicious.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="review-avatar">
+          <div class="review-user">
+            <div class="review-name">Michael Chen</div>
+            <div class="review-date">February 2, 2024</div>
+            <div class="review-rating">★★★★☆</div>
+          </div>
+        </div>
+        <p class="review-text">Ranipuram Hills was an adventure! The trek was challenging but the views were worth it. Highly recommend for nature lovers.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Patel" class="review-avatar">
+          <div class="review-user">
+            <div class="review-name">Priya Patel</div>
+            <div class="review-date">January 20, 2024</div>
+            <div class="review-rating">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Chandragiri Fort and the backwaters were so peaceful. The locals were friendly and the scenery was breathtaking!</p>
+      </div>
+    </div>
+
+    <div class="review-form">
+      <h3 class="form-title">Share Your Experience</h3>
+      <form id="reviewForm">
+        <div class="form-group">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" id="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email (optional)</label>
+          <input type="email" id="email" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rating</label>
+          <div class="rating-stars">
+            <span class="rating-star" data-rating="1">★</span>
+            <span class="rating-star" data-rating="2">★</span>
+            <span class="rating-star" data-rating="3">★</span>
+            <span class="rating-star" data-rating="4">★</span>
+            <span class="rating-star" data-rating="5">★</span>
+          </div>
+          <input type="hidden" id="rating" name="rating" value="0">
+        </div>
+        <div class="form-group">
+          <label for="review" class="form-label">Your Review</label>
+          <textarea id="review" class="form-textarea" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit Review</button>
+      </form>
+    </div>
+  </div>
+</section>
+
   <footer class="footer">
     <div class="footer-content">
       <p>© 2025 Kerala Travel in Frames | Discover Kasaragod</p>
@@ -134,6 +205,38 @@
       const shapes = document.querySelectorAll('.shape');
       if (hero) hero.style.transform = `translateY(${scrolled * 0.5}px)`;
       shapes.forEach((shape, i) => shape.style.transform = `translateY(${scrolled * ((i + 1) * 0.2)}px)`);
+    });
+
+    // Rating stars functionality
+    const stars = document.querySelectorAll('.rating-star');
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-rating');
+            document.getElementById('rating').value = rating;
+            stars.forEach((s, index) => {
+                if (index < rating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    // Form submission
+    document.getElementById('reviewForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const rating = document.getElementById('rating').value;
+        const reviewText = document.getElementById('review').value;
+        if (rating === '0') {
+            alert('Please select a rating');
+            return;
+        }
+        alert(`Thank you for your review, ${name}! Your ${rating}-star rating has been submitted.`);
+        this.reset();
+        stars.forEach(star => star.classList.remove('active'));
+        document.getElementById('rating').value = '0';
     });
   </script>
 </body>
@@ -653,5 +756,303 @@
             background: linear-gradient(120deg, #c8e6c9 0%, #2E7D32 100%);
             border-color: #83d487;
             transform: translateY(-2px) scale(1.04);
+        }
+
+        .reviews-section {
+            padding: 6rem 0;
+            background: 
+                linear-gradient(135deg, #f5fff5 0%, #d8f3dc 100%),
+                url('https://www.transparenttextures.com/patterns/leaves-pattern.png');
+            background-size: cover, auto;
+            background-repeat: no-repeat, repeat;
+            backdrop-filter: blur(6px);
+            border-radius: 30px;
+            box-shadow: 0 8px 40px rgba(76, 175, 80, 0.15);
+            margin: 2rem 0;
+        }
+        .reviews-section .container {
+            background: rgba(255,255,255,0.85);
+            border-radius: 24px;
+            box-shadow: 0 4px 32px rgba(34,139,34,0.10);
+            padding: 2rem;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 3rem;
+            color: #1B5E20;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .review-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .review-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+        }
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.2);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid #4CAF50;
+        }
+
+        .review-user {
+            flex: 1;
+        }
+
+        .review-name {
+            font-weight: bold;
+            color: #1B5E20;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #FFC107;
+            font-size: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        .review-text {
+            color: #333;
+            line-height: 1.6;
+            font-style: italic;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .review-text::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 3rem;
+            color: rgba(76, 175, 80, 0.2);
+            line-height: 1;
+        }
+
+        /* Review Form */
+        .review-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1B5E20;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1B5E20;
+            font-weight: bold;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #2E7D32;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating-star {
+            font-size: 1.8rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .rating-star:hover, .rating-star.active {
+            color: #FFC107;
+            transform: scale(1.1);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+
+            .review-card {
+                padding: 1.5rem;
+            }
+
+            .form-title {
+                font-size: 1.5rem;
+            }
+
+            .form-input, .form-textarea {
+                font-size: 0.9rem;
+            }
+
+            .submit-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .location {
+                font-size: 0.9rem;
+            }
+
+            .card-content {
+                padding: 1.5rem;
+            }
+
+            .footer h3 {
+                font-size: 1.5rem;
+            }
+
+            .review-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .review-name {
+                font-size: 1rem;
+            }
+
+            .review-date {
+                font-size: 0.8rem;
+            }
+
+            .review-rating {
+                font-size: 1rem;
+            }
+
+            .review-text {
+                font-size: 0.9rem;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+            }
+
+            .form-input, .form-textarea {
+                font-size: 0.8rem;
+            }
+
+            .rating-star {
+                font-size: 1.2rem;
+            }
+
+            .submit-btn {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
         }
     </style>
